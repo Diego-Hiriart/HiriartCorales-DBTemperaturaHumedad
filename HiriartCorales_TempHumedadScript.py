@@ -41,8 +41,8 @@ def main(arg):
         if(arg[0]=="registro"):
             try:
                 BTHiriartCorales = Serial(port = 'COM18', baudrate = 9600, timeout = None)
-                Serial.flushInput(BTHiriartCorales)#Limpia el buffer, pues estarian todos los datos que envio el Arduino antes de la ejecucion del script
-                time.sleep(1)#Delay para que se borre el buffer antes de continuar
+                #Serial.flushInput(BTHiriartCorales)#Limpia el buffer, pues estarian todos los datos que envio el Arduino antes de la ejecucion del script
+                #time.sleep(1)#Delay para que se borre el buffer antes de continuar
                 while(True):
                     datos=""#Vaciar string de datos
                     signal.signal(signal.SIGINT, salir)#Si se presiona el comando para keyboard interrupt, se llama esta funcion
