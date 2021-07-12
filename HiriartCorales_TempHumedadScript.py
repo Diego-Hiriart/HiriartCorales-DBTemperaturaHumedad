@@ -17,6 +17,7 @@ from os import environ
 import sys#Librerias para salir del programa
 import signal
 import time#Para el sleep que permite esperar a borrar el buffer serial
+import ctypes
 
 def salir(signal, frame):#Se llama esta funcion si en algún momento se presiona el keyboard interrupt
     print("Programa terminado")
@@ -43,9 +44,12 @@ def main(arg):
                 BTHiriartCorales = Serial(port = 'COM18', baudrate = 9600, timeout = None)
                 #Serial.flushInput(BTHiriartCorales)#Limpia el buffer, pues estarian todos los datos que envio el Arduino antes de la ejecucion del script
                 #time.sleep(1)#Delay para que se borre el buffer antes de continuar
+                print("Registrando")
                 while(True):
                     datos=""#Vaciar string de datos
                     signal.signal(signal.SIGINT, salir)#Si se presiona el comando para keyboard interrupt, se llama esta funcion
+                    #Tambien se le llama ES_CONTINUOUS, impide que entre el sleep la PC mientras se ejecute esta sentencia periodicamente antes de llegar a estado sleep
+                    ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
                     while(BTHiriartCorales.inWaiting() == 0):
                         pass
                     lecturaCOM = (BTHiriartCorales.readline().decode('utf-8'))
@@ -93,9 +97,7 @@ def main(arg):
             plt.show()
             
             print("\nPrograma terminado")
-            
-            
-            
+                           
         else:
             print("No ingresó un parámetro válido. \nIngrese 'registro' para guardar datos y 'graficar' para ver el análisis de datos")
     

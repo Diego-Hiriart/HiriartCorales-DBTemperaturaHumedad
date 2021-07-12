@@ -113,7 +113,7 @@ GO
 ALTER DATABASE [TempHumedad-HiriartCorales] SET  READ_WRITE 
 GO
 
-/****** Object:  Table [dbo].[FechaTempHumedad]    Script Date: 2/7/2021 21:19:06 ******/
+/****** Object:  Table [dbo].[FechaTempHumedad]    Script Date: 12/7/2021 9:34:26 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -121,13 +121,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[FechaTempHumedad](
-	[IDRegistro] [int] IDENTITY(1,1) NOT NULL,
+	[RegistroID] [int] IDENTITY(1,1) NOT NULL,
 	[FechaHora] [datetime] NOT NULL,
 	[Temperatura] [float] NOT NULL,
 	[Humedad] [float] NOT NULL,
  CONSTRAINT [PK_FechaTempHumedad] PRIMARY KEY CLUSTERED 
 (
-	[IDRegistro] ASC
+	[RegistroID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
