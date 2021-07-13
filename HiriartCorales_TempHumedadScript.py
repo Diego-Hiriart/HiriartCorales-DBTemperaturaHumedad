@@ -17,7 +17,7 @@ from os import environ
 import sys#Librerias para salir del programa
 import signal
 import time#Para el sleep que permite esperar a borrar el buffer serial
-import ctypes
+import ctypes#Tiene la funcion para evitar que entre en sleep la PC
 
 def salir(signal, frame):#Se llama esta funcion si en algún momento se presiona el keyboard interrupt
     print("Programa terminado")
@@ -29,7 +29,7 @@ def conectarDB():
     conexion = pyodbc.connect("DRIVER={ODBC Driver 17 for SQL Server};SERVER="+server+";DATABASE="+base+";Trusted_Connection=yes;")
     return conexion
 
-def ignorarADvertencias():#Hace que no aparexcan las advertencias al crear el grafico
+def ignorarAdvertencias():#Hace que no aparezcan las advertencias al crear el grafico
     environ["QT_DEVICE_PIXEL_RATIO"] = "0"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
     environ["QT_SCREEN_SCALE_FACTORS"] = "1"
@@ -78,22 +78,24 @@ def main(arg):
             consola=conectarDB().cursor()#Consola para ejecutar comandos
             lecturas = consola.execute("SELECT * FROM FechaTempHumedad")#Leer datos
             for i in lecturas:
-                fechaHora = np.append(fechaHora, str(i[1].strftime("%Y/%m/%d\n%H:%M:%S")))
+                fechaHora = np.append(fechaHora, str(i[1].strftime("%Y/%m/%d %H:%M")))
                 temp = np.append(temp, i[2])
                 humedad = np.append(humedad, i[3])
                 
             #Graficos
             print("\nCreando grafico de temperatura y humedad")
-            ignorarADvertencias()
+            ignorarAdvertencias()
             figura = plt.figure(figsize=(30,20))
             plt.subplot(311)
             plt.title("Análisis de datos de temperatura y humedad en el tiempo")            
             plt.xlabel("Tiempo (fechas)")
             plt.ylabel("Valores")
+            plt.xticks(rotation=60)
             plt.plot(fechaHora, temp, 'r', label="Temperatura C°")
             plt.plot(fechaHora, humedad, 'b', label="Humedad %")
             plt.legend()
-            plt.grid(True)            
+            plt.grid(True) 
+            plt.savefig("TempHum-HC.png");#Guarda el grafico
             plt.show()
             
             print("\nPrograma terminado")
