@@ -1,20 +1,6 @@
-USE [master]
-GO
-
-/****** Object:  Database [TempHumedad-HiriartCorales]    Script Date: 2/7/2021 21:18:33 ******/
+/****** Script SQL ******/
+--Base de datos
 CREATE DATABASE [TempHumedad-HiriartCorales]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'TempHumedad-HiriartCorales', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVERDEV\MSSQL\DATA\TempHumedad-HiriartCorales.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'TempHumedad-HiriartCorales_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVERDEV\MSSQL\DATA\TempHumedad-HiriartCorales_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
-
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [TempHumedad-HiriartCorales].[dbo].[sp_fulltext_database] @action = 'enable'
-end
 GO
 
 ALTER DATABASE [TempHumedad-HiriartCorales] SET ANSI_NULL_DEFAULT OFF 
@@ -113,21 +99,14 @@ GO
 ALTER DATABASE [TempHumedad-HiriartCorales] SET  READ_WRITE 
 GO
 
-/****** Object:  Table [dbo].[FechaTempHumedad]    Script Date: 12/7/2021 9:34:26 ******/
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
+--Tabla
+USE [TempHumedad-HiriartCorales]
 
-CREATE TABLE [dbo].[FechaTempHumedad](
-	[RegistroID] [int] IDENTITY(1,1) NOT NULL,
-	[FechaHora] [datetime] NOT NULL,
-	[Temperatura] [float] NOT NULL,
-	[Humedad] [float] NOT NULL,
- CONSTRAINT [PK_FechaTempHumedad] PRIMARY KEY CLUSTERED 
-(
-	[RegistroID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+CREATE TABLE FechaTempHumedad(
+	RegistroID int IDENTITY(1,1) NOT NULL primary key,
+	FechaHora datetime NOT NULL,
+	Temperatura float NOT NULL,
+	Humedad float NOT NULL,
+);
 GO

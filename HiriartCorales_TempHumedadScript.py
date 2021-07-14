@@ -68,7 +68,7 @@ def main(arg):
                 
             except Exception as error:
                 print("Se desconectó el sensor, reconecte y ejecute de nuevo")
-                print(error)#Para debug
+                #print(error)#Para debug
             finally:
                 BTHiriartCorales.close()#Cierra el puerto
         elif(arg[0]=="graficar"):
